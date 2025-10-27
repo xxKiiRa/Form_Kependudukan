@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // --- Simpan ke DB ---
         b.btnSimpan.setOnClickListener {
             val data = collectForm() ?: return@setOnClickListener
 
@@ -116,21 +115,16 @@ class MainActivity : AppCompatActivity() {
         }
         val status = b.spStatus.selectedItem?.toString() ?: ""
 
-        // --- Validasi field teks wajib ---
         if (nama.isEmpty()) { b.etNama.error = "Wajib diisi"; return null }
         if (kab.isEmpty()) { b.etKabupaten.error = "Wajib diisi"; return null }
         if (kec.isEmpty()) { b.etKecamatan.error = "Wajib diisi"; return null }
         if (desa.isEmpty()) { b.etDesa.error = "Wajib diisi"; return null }
         if (gender.isEmpty()) { toast("Pilih jenis kelamin"); return null }
-
-        // --- Validasi NIK 16 digit angka ---
         if (nikStr.length != 16 || nikStr.any { !it.isDigit() }) {
             b.etNik.error = "NIK harus 16 digit angka"
             return null
         }
-        val nik = nikStr.toLong()   // aman karena sudah valid 16 digit
-
-        // --- Validasi & parse RT/RW ---
+        val nik = nikStr.toLong() 
         val rt = rtStr.toIntOrNull()
         val rw = rwStr.toIntOrNull()
         if (rt == null) { b.etRT.error = "RT harus angka"; return null }
